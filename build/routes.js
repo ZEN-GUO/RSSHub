@@ -7179,6 +7179,30 @@ export default {
     "url": "news.ahjzu.edu.cn",
     "lang": "zh-CN"
   },
+  "aiaa": {
+    "routes": {
+      "/journal/:journalID": {
+        "name": "ASR Articles",
+        "maintainers": [
+          "HappyZhu99"
+        ],
+        "categories": [
+          "journal"
+        ],
+        "path": "/journal/:journalID",
+        "parameters": {
+          "journalID": "journal ID, can be found in the URL"
+        },
+        "example": "/aiaa/journal/aiaaj",
+        "location": "journal.ts",
+        "module": () => import('@/routes/aiaa/journal.ts')
+      }
+    },
+    "name": "AIAA Aerospace Research Central",
+    "apiRoutes": {},
+    "url": "arc.aiaa.org",
+    "lang": "en"
+  },
   "aibase": {
     "routes": {
       "/daily": {
@@ -12478,6 +12502,42 @@ export default {
     ],
     "description": "",
     "lang": "en"
+  },
+  "azurlane": {
+    "routes": {
+      "/news/:server/:type?": {
+        "path": "/news/:server/:type?",
+        "name": "News",
+        "categories": [
+          "game"
+        ],
+        "maintainers": [
+          "AnitsuriW"
+        ],
+        "example": "/azurlane/news/jp/0",
+        "parameters": {
+          "server": "game server (ISO 3166 two-letter country code, case-insensitive), only `JP` is supported for now",
+          "type": "news type, see the table below, `0` by default"
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "description": "| すべて | お知らせ | イベント | メインテナンス | 重要 |\n| :--: | :--: | :--: | :--: | :--: |\n| 0 | 1 | 2 | 3 | 4 |",
+        "location": "news.ts",
+        "module": () => import('@/routes/azurlane/news.ts')
+      }
+    },
+    "name": "Azur Lane",
+    "url": "azurlane.jp",
+    "categories": [
+      "game"
+    ],
+    "lang": "ja"
   },
   "baai": {
     "routes": {
@@ -32684,6 +32744,101 @@ export default {
     "name": "东莞教研网",
     "apiRoutes": {},
     "url": "dgjyw.com",
+    "lang": "zh-CN"
+  },
+  "dgtle": {
+    "routes": {
+      "/news/:id?": {
+        "path": "/news/:id?",
+        "name": "鲸闻",
+        "url": "www.dgtle.com",
+        "maintainers": [
+          "nczitzk"
+        ],
+        "example": "/dgtle/news/0",
+        "parameters": {
+          "category": {
+            "description": "分类，默认为 `0`，即最新，可在下表中找到",
+            "options": [
+              {
+                "label": "最新",
+                "value": "0"
+              },
+              {
+                "label": "直播",
+                "value": "395"
+              },
+              {
+                "label": "资讯",
+                "value": "396"
+              },
+              {
+                "label": "每日一言",
+                "value": "388"
+              }
+            ]
+          }
+        },
+        "description": ":::tip\n订阅 [最新](https://www.dgtle.com/news)，其对应分类 ID 为 `0`，此时路由为 [`/dgtle/news/0`](https://rsshub.app/dgtle/news/0)。\n:::\n\n| 最新 | 直播 | 资讯 | 每日一言 |\n| ---- | ---- | ---- | -------- |\n| 0    | 395  | 396  | 388      |\n",
+        "categories": [
+          "new-media"
+        ],
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportRadar": true,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "www.dgtle.com/news"
+            ],
+            "target": "/news"
+          },
+          {
+            "title": "最新",
+            "source": [
+              "www.dgtle.com/news"
+            ],
+            "target": "/news/0"
+          },
+          {
+            "title": "直播",
+            "source": [
+              "www.dgtle.com/news"
+            ],
+            "target": "/news/395"
+          },
+          {
+            "title": "资讯",
+            "source": [
+              "www.dgtle.com/news"
+            ],
+            "target": "/news/396"
+          },
+          {
+            "title": "每日一言",
+            "source": [
+              "www.dgtle.com/news"
+            ],
+            "target": "/news/388"
+          }
+        ],
+        "view": 0,
+        "location": "news.ts",
+        "module": () => import('@/routes/dgtle/news.ts')
+      }
+    },
+    "name": "数字尾巴",
+    "url": "dgtle.com",
+    "categories": [
+      "new-media"
+    ],
+    "description": "",
     "lang": "zh-CN"
   },
   "dgut": {
@@ -77522,9 +77677,9 @@ export default {
         ],
         "example": "/mymusicsheet/user/sheets/HalcyonMusic/USD/1",
         "parameters": {
-          "username": "用户名，可在URL中找到",
-          "iso": "用于显示价格的ISO 4217货币代码, 支持常见代码, 默认为人民币, 即`CNY`",
-          "freeOnly": "只返回免费谱, 任意值为开启"
+          "username": "Username, can be found in the URL",
+          "iso": "ISO 4217 currency code for displaying prices, defaults to `USD`",
+          "freeOnly": "Only return free scores, any value to enable"
         },
         "features": {
           "requireConfig": false,
@@ -77537,8 +77692,8 @@ export default {
         "radar": [
           {
             "source": [
-              "mymusicsheet.com/:username/*",
-              "mymusicsheet.com/:username"
+              "mymusicfive.com/:username/*",
+              "mymusicfive.com/:username"
             ],
             "target": "/user/sheets/:username"
           }
@@ -77547,13 +77702,13 @@ export default {
         "maintainers": [
           "Freddd13"
         ],
-        "description": "关于 ISO 4217，请参考[维基百科](https://zh.wikipedia.org/zh-cn/ISO_4217#%E7%8E%B0%E8%A1%8C%E4%BB%A3%E7%A0%81)",
+        "description": "Please refer to [Wikipedia](https://en.wikipedia.org/wiki/ISO_4217#Active_codes) for ISO 4217.",
         "location": "usersheets.ts",
         "module": () => import('@/routes/mymusicsheet/usersheets.ts')
       }
     },
-    "name": "MyMusicSheet",
-    "url": "mymusicsheet.com",
+    "name": "mymusic5 (MyMusicSheet)",
+    "url": "mymusicfive.com",
     "lang": "en"
   },
   "mysql": {
